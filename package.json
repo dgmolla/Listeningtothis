@@ -1,0 +1,27 @@
+{
+  "name": "myjam",
+  "version": "1.0.0",
+  "description": "Find your Jam! Easily see the music you've been bumping the most with MyJam",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dgmolla/MyJam.git"
+  },
+  "author": "Dawit Molla",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dgmolla/MyJam/issues"
+  },
+  "homepage": "https://github.com/dgmolla/MyJam#readme",
+  "dependencies": {
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "querystring": "^0.2.0",
+    "request": "^2.88.2"
+  }
+}
