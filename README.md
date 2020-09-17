@@ -1,4 +1,4 @@
 # MyJam
 
 
-Find your Jam! Easily see the music you've been bumping the most with MyJam
+Find your Jam! MyJam lets you easily see the music and artists you've been bumping on Spotify the most.
