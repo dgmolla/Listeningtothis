@@ -5,7 +5,7 @@ var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 
 var client_id = '88641e65dd0446eba7992ffb06ee8b39'; // Your client id
-var client_secret = 'a6144a2f5b6540f5aa41f92aaa9a0d21'; // Your secret
+var client_secret = 'xxx'; // Your secret
 var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
 
 /**
@@ -133,6 +133,32 @@ app.get('/refresh_token', function(req, res) {
     }
   });
 });
+
+var spotifyApi = new SpotifyWebApi();
+spotifyApi.setAccessToken('<here_your_access_token>');
+spotifyApi.getUserPlaylists('jmperezperez')
+  .then(function(data) {
+    console.log('User playlists', data);
+  }, function(err) {
+    console.error(err);
+  });
+// app.get('/v1/me/top/:tracks', function(req,res) {
+//
+//   var authOptions = {
+//     url: 'https://api.spotify.com/v1/me/top/{type}',
+//     headers: { 'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')) },
+//     json: true
+//   };
+//   // grab user's top tracks and artists
+//   var top = req.items;
+//   var track = {name: name, img: img,}
+//   var tracks = new Array(10);
+//
+//   for(i=0; i<9; ++i) {
+//     tracks[i].name = top[i].name;
+//     tracks[i].img = top[i].img;
+//   }
+// })
 
 console.log('Listening on 8888');
 app.listen(8888);
