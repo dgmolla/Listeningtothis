@@ -17,8 +17,9 @@ app.get('/', function(req, res) {
     if(error) {
       console.log(error);
     }else {
+      console.log((JSON.parse(body)).value);
       res.render("chuck", {
-        jokeData: JSON.parse(body)
+        jokeData: (JSON.parse(body)).value
       });
     }
 
