@@ -1,3 +1,5 @@
+import config from './config.js';
+
 var express = require('express'); // Express web server framework
 var request = require('request'); // "Request" library
 var cors = require('cors');
@@ -5,7 +7,7 @@ var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 
 var client_id = '88641e65dd0446eba7992ffb06ee8b39'; // Your client id
-var client_secret = 'xxx'; // Your secret
+var client_secret = 'a6144a2f5b6540f5aa41f92aaa9a0d21'; // Your secret
 var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
 
 /**
