@@ -1,17 +1,15 @@
 import React from 'react';
 import logo from './logo.svg';
 import { useState, useEffect } from 'react';
-import { Button, Table } from 'react-bootstrap'
+import { Button, Table } from 'react-bootstrap';
+import TopTable from './components/table.js';
+import Spotify from 'spotify-web-api-js';
+
+const spotifyWebApi = new Spotify();
 
 const App = () => {
 
-  const [toptracks, setToptracks] = useState();
-
-  // constructor(){
-  //   const params = this.getHashParams();
-  //
-  // }
-  function getHashParams() {
+  const getHashParams = () => {
     var hashParams = {};
     var e, r = /([^&;=]+)=?([^&;]*)/g,
         q = window.location.hash.substring(1);
@@ -20,33 +18,44 @@ const App = () => {
     }
     return hashParams;
   }
+  const params = getHashParams();
+
+  if(params.access_token){
+    spotifyWebApi.setAccessToken(params.acces_token);
+  }
+  const [toptracks, setTopTracks] = useState( [
+    {
+      name: 'Not Checked',
+      image: ''
+    }
+  ]);
+
+
+  const getTopTracks = () => {
+    spotifyWebApi.getMyTopTracks().then((response) => {
+          for(x of response.JSON) {
+            setTopTracks(
+              toptracks.push({
+                name: response[x].item.name,
+                image: response[x].item.album.images[0].url
+            })
+          )}
+      })
+  };
+  console.log(toptracks);
 
   const tracks = [
     {name: "Skinny Suge", artist: "Freddie Gibbs"},
     {name: "Yeah Yeah", artist: "Young Nudy"},
     {name: "Let it Happen", artist: "Tame Impala"}
   ]
-  const renderTrack = (track, index) => {
-    return(
-      <tr key={index}>
-        <td>{(index+1)}</td>
-        <td>{track.name}</td>
-        <td>{track.artist}</td>
-      </tr>
-    )
-  }
-
   return (
   <div className="App">
-    <a href='http://localhost:8888'>
+    <Button href='http://localhost:8888'>
       <button>Log in with Spotify</button>
-    </a>
+    </Button>
 
-    <Table responsive="lg" hover>
-      <tbody>
-       {tracks.map(renderTrack)}
-      </tbody>
-     </Table>
+    <TopTable array={ tracks }/>
    </div> )
 };
 
