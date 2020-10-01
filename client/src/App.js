@@ -3,9 +3,9 @@ import logo from './logo.svg';
 import { useState, useEffect } from 'react';
 import { Button, Table } from 'react-bootstrap';
 import TopTable from './components/table.js';
-import Spotify from 'spotify-web-api-js';
+var SpotifyWebApi = require('spotify-web-api-js');
 
-const spotifyWebApi = new Spotify();
+var spotifyWebApi = new SpotifyWebApi();
 
 const App = () => {
 
@@ -20,29 +20,73 @@ const App = () => {
   }
   const params = getHashParams();
 
-  if(params.access_token){
-    spotifyWebApi.setAccessToken(params.acces_token);
-  }
-  const [toptracks, setTopTracks] = useState( [
-    {
-      name: 'Not Checked',
-      image: ''
-    }
-  ]);
 
+  //
+  // const getTopTracks = async (
+  //   url = 'https://api.spotify.com/v1/me/top/tracks',
+  //   data = {}) => {
+  //     // Default options are marked with *
+  //     const response = await fetch(url, {
+  //       method: 'GET', // *GET, POST, PUT, DELETE, etc.
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         'Authorization': 'Bearer ' + params.access_token
+  //         // 'Content-Type': 'application/x-www-form-urlencoded',
+  //       },
+  //       redirect: 'follow', // manual, *follow, error
+  //       referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+  //     });
+  //     return response.json(); // parses JSON response into native JavaScript objects
+  //   }
 
-  const getTopTracks = () => {
-    spotifyWebApi.getMyTopTracks().then((response) => {
-          for(x of response.JSON) {
-            setTopTracks(
-              toptracks.push({
-                name: response[x].item.name,
-                image: response[x].item.album.images[0].url
-            })
-          )}
-      })
-  };
-  console.log(toptracks);
+    // const getTopTracks = () => {
+    //   return $.ajax({
+    //     url: 'https://api.spotify.com/v1/me/top/tracks',
+    //     headers: {
+    //       'Authorization': 'Bearer ' + params.access_token
+    //     }
+    //   });
+    // }
+
+  spotifyWebApi.setAccessToken(params.access_token);
+  console.log("access token set successfully " + params.access_token);
+  const toptracks = [];
+
+  const getTopTracks = () => spotifyWebApi.getMyTopTracks(
+    {}, (error, results) => {
+
+      if(error) {
+        console.error(error);
+      }
+      else {
+        console.log(results);
+        // for(let x=0; x<results.length; ++x) {
+        //   toptracks = toptracks.push({
+        //       name: results[x].items.name,
+        //       image: results[x].items.images[0].url
+        //     });
+        }
+      });
+    // });
+
+  // const getTopTracks = async () => {
+  //   const response = await spotifyWebApi.getMyTopTracks();
+  //   if (!response.ok) throw response;
+  //   const json = await response.json();
+  //   if(!json.ok) throw json;
+  //
+  //   let tt = toptracks;
+  //
+  //   for(let x=0; x<json.length; ++x) {
+  //     setTopTracks(
+  //       tt.push({
+  //         name: json[x].item.name,
+  //         image: json[x].item.album.images[0].url
+  //       })
+  //     )
+  // }};
+
+  // console.log(toptracks);
 
   const tracks = [
     {name: "Skinny Suge", artist: "Freddie Gibbs"},
@@ -51,11 +95,13 @@ const App = () => {
   ]
   return (
   <div className="App">
-    <Button href='http://localhost:8888'>
-      <button>Log in with Spotify</button>
-    </Button>
+    <Button href='http://localhost:8888'
+            variant="success">Log in with Spotify</Button>
 
-    <TopTable array={ tracks }/>
+    <Button onClick={() => getTopTracks()}
+            variant="success">Get Top Tracks</Button>
+
+    <TopTable array={ toptracks }/>
    </div> )
 };
 
