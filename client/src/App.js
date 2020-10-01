@@ -20,6 +20,40 @@ const App = () => {
   }
   const params = getHashParams();
 
+  const [topTracks, setTopTracks] = useState([]);
+
+  const getTopTracks = async (token) => {
+    try {
+      const result = await fetch('https://api.spotify.com/v1/me/top/tracks', {
+        method: 'GET',
+        headers: { 'Authorization' : 'Bearer ' + token}
+      });
+
+      const data = await result.json();
+      setTopTracks(data.items);
+    } catch (err) {
+      console.log('async failed');
+    }
+  }
+
+  const tracks = [
+    {name: "Skinny Suge", artist: "Freddie Gibbs"},
+    {name: "Yeah Yeah", artist: "Young Nudy"},
+    {name: "Let it Happen", artist: "Tame Impala"}
+  ]
+  return (
+  <div className="App">
+    <Button href='http://localhost:8888'
+            variant="success">Log in with Spotify</Button>
+
+    <Button onClick={() => getTopTracks(params.access_token)}
+            variant="success">Get Top Tracks</Button>
+
+    <TopTable array={ topTracks }/>
+   </div> )
+};
+
+  export default App;
 
   //
   // const getTopTracks = async (
@@ -48,25 +82,42 @@ const App = () => {
     //   });
     // }
 
-  spotifyWebApi.setAccessToken(params.access_token);
-  console.log("access token set successfully " + params.access_token);
-  const toptracks = [];
 
-  const getTopTracks = () => spotifyWebApi.getMyTopTracks(
-    {}, (error, results) => {
-
-      if(error) {
-        console.error(error);
-      }
-      else {
-        console.log(results);
+  // const getTopTracks = async () => {
+  //   try {
+  //     const token = await spotifyWebApi.setAccessToken(params.access_token);
+  //     console.log('access token set successfully');
+  //     const topt = await spotifyWebApi.getMyTopTracks().then(
+  //       (data) => {
+  //         console.log(data);
+  //       },
+  //       (err) => {
+  //         console.error(err);
+  //       }
+  //     )
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
+  //
+  // console.log("access token set successfully " + params.access_token);
+  // const toptracks = [];
+  //
+  // const getTopTracks = () => spotifyWebApi.getMyTopTracks(
+  //   {}, (error, results) => {
+  //
+  //     if(error) {
+  //       console.error(error);
+  //     }
+  //     else {
+  //       console.log(results);
         // for(let x=0; x<results.length; ++x) {
         //   toptracks = toptracks.push({
         //       name: results[x].items.name,
         //       image: results[x].items.images[0].url
         //     });
-        }
-      });
+      //   }
+      // });
     // });
 
   // const getTopTracks = async () => {
@@ -88,21 +139,29 @@ const App = () => {
 
   // console.log(toptracks);
 
-  const tracks = [
-    {name: "Skinny Suge", artist: "Freddie Gibbs"},
-    {name: "Yeah Yeah", artist: "Young Nudy"},
-    {name: "Let it Happen", artist: "Tame Impala"}
-  ]
-  return (
-  <div className="App">
-    <Button href='http://localhost:8888'
-            variant="success">Log in with Spotify</Button>
+    //
+    // const getTopTracks = async (
+    //   url = 'https://api.spotify.com/v1/me/top/tracks',
+    //   data = {}) => {
+    //     // Default options are marked with *
+    //     const response = await fetch(url, {
+    //       method: 'GET', // *GET, POST, PUT, DELETE, etc.
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //         'Authorization': 'Bearer ' + params.access_token
+    //         // 'Content-Type': 'application/x-www-form-urlencoded',
+    //       },
+    //       redirect: 'follow', // manual, *follow, error
+    //       referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    //     });
+    //     return response.json(); // parses JSON response into native JavaScript objects
+    //   }
 
-    <Button onClick={() => getTopTracks()}
-            variant="success">Get Top Tracks</Button>
-
-    <TopTable array={ toptracks }/>
-   </div> )
-};
-
-export default App;
+      // const getTopTracks = () => {
+      //   return $.ajax({
+      //     url: 'https://api.spotify.com/v1/me/top/tracks',
+      //     headers: {
+      //       'Authorization': 'Bearer ' + params.access_token
+      //     }
+      //   });
+      // }

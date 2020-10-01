@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Table } from 'react-bootstrap'
+import { Button, Table, Image } from 'react-bootstrap'
 
 const TopTable = ({ array }) => {
 
@@ -7,13 +7,14 @@ const TopTable = ({ array }) => {
     return(
       <tr key={index}>
         <td>{(index+1)}</td>
+        <td><Image src={track.album.images[0].url} /></td>
         <td>{track.name}</td>
-        <td>{track.artist}</td>
+        <td>{track.artists[0].name}</td>
       </tr>
     )
   }
 
-  return(<Table responsive="lg" hover>
+  return(<Table size="small" hover>
     <tbody>
      {array.map(renderTrack)}
     </tbody>
