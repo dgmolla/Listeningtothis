@@ -1,5 +1,6 @@
 import React from 'react';
 import logo from './logo.svg';
+import './App.css';
 import { useState, useEffect } from 'react';
 import { Button, Table } from 'react-bootstrap';
 import TopTable from './components/table.js';
