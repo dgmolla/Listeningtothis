@@ -6,16 +6,17 @@ const TopTable = ({ array }) => {
   const renderTrack = (track, index) => {
     return(
       <tr key={index}>
-        <td>{(index+1)}</td>
+        <td className="align-middle"><span>{(index+1)}</span></td>
         <td><Image src={track.album.images[0].url} /></td>
-        <td>{track.name}</td>
-        <td>{track.artists[0].name}</td>
+        <td className="align-middle"><span>{track.name}</span></td>
+        <td className="align-middle"><span>{track.artists[0].name}</span></td>
       </tr>
     )
   }
 
-  return(<Table size="small" hover>
-    <tbody>
+  return(<Table
+    size="sm" hover>
+    <tbody className="w-50 p3 z-depth-5">
      {array.map(renderTrack)}
     </tbody>
    </Table>

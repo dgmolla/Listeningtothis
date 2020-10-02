@@ -1,8 +1,9 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import './custom.css';
 import { useState, useEffect } from 'react';
-import { Button, Table } from 'react-bootstrap';
+import { Button, Container, Row, Col} from 'react-bootstrap';
 import TopTable from './components/table.js';
 var SpotifyWebApi = require('spotify-web-api-js');
 
@@ -37,20 +38,28 @@ const App = () => {
     }
   }
 
-  const tracks = [
-    {name: "Skinny Suge", artist: "Freddie Gibbs"},
-    {name: "Yeah Yeah", artist: "Young Nudy"},
-    {name: "Let it Happen", artist: "Tame Impala"}
-  ]
   return (
   <div className="App">
-    <Button href='http://localhost:8888'
-            variant="success">Log in with Spotify</Button>
+    <Container>
+      <Row className="p1">
+        <Col>
+        <h1>What are you listening to?</h1>
+        <Button href='http://localhost:8888'
+                variant="success">LOG IN WITH SPOTIFY</Button>
+        </Col>
+        <Col></Col>
+      </Row>
+      <div className="p2">
+        <Row>
+          <Button onClick={() => getTopTracks(params.access_token)}
+                  variant="success">GET TOP TRACKS</Button>
+        </Row>
 
-    <Button onClick={() => getTopTracks(params.access_token)}
-            variant="success">Get Top Tracks</Button>
-
-    <TopTable array={ topTracks }/>
+        <Row>
+          <TopTable margin="100px" array={ topTracks }/>
+        </Row>
+      </div>
+    </Container>
    </div> )
 };
 
