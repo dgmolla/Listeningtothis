@@ -14,13 +14,19 @@ const TopTable = ({ array }) => {
     )
   }
 
-  return(<Table
-    size="sm" hover>
-    <tbody className="w-50 p3 z-depth-5">
-     {array.map(renderTrack)}
-    </tbody>
-   </Table>
-  )
+  if(array) {
+    return(<Table
+      size="sm" hover>
+      <tbody className="w-50 p3 z-depth-5">
+       {array.map(renderTrack)}
+      </tbody>
+     </Table>
+    )
+  }
+  else {
+    alert('You gotta log in!');
+    return null;
+  }
 };
 
 

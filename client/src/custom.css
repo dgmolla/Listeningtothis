@@ -1,27 +1,62 @@
-span {
-  font-family: 'Montserrat' !important;
+html {
+    scroll-behavior: smooth;
 }
-img {
-  height: 75px;
+body {
+  background-color: #fafafa;
+}
+html.sr .load-hidden {
+  visibility: hidden;
 }
 
+/* p1 */
+.p1 {
+  height: 100vh;
+}
+.btn {
+  width: 130px;
+  font-size: 17.5px !important;
+}
+.dance {
+  margin: auto;
+  margin-top: 70px;
+  height: 420px;
+  z-index: -1;
+}
 h1 {
   font-size: 84px !important;
   font-family: 'Montserrat' !important;
   font-weight: bold !important;
   margin-bottom: 50px !important;
   margin-top: 25px !important;
+  transition: all ease-in 3s !important;
+}
+.arrow {
+  width: 24px;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  margin-bottom: 10px;
+}
+
+
+/* p2 */
+.tab-cont {
+  box-shadow: 0 0 20px grey;
+  margin: auto;
+  margin-bottom: 25px;
+  margin-top: 75px;
+  width: 90%;
+  border-radius: 24px;
 }
 .table {
   margin: auto;
-  margin-top: 30px;
+  margin-top: 40px;
+  margin-bottom: 40px;
   width: 80% !important;
 }
-.btn {
-  margin: auto;
-  height: 40px;
+td img {
+  height: 75px;
 }
-
-.p1, .p2 {
-  height: 100vh;
+span {
+  font-family: 'Open Sans' !important;
 }

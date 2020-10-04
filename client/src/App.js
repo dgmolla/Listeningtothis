@@ -1,13 +1,14 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import './custom.css';
+import vol from './imgs/dancing.svg';
+import arrow from './imgs/arrow.svg';
+import spot from './imgs/spot.png';
 import { useState, useEffect } from 'react';
 import { Button, Container, Row, Col} from 'react-bootstrap';
+import Typed from 'react-typed';
 import TopTable from './components/table.js';
-var SpotifyWebApi = require('spotify-web-api-js');
 
-var spotifyWebApi = new SpotifyWebApi();
 
 const App = () => {
 
@@ -24,39 +25,47 @@ const App = () => {
 
   const [topTracks, setTopTracks] = useState([]);
 
-  const getTopTracks = async (token) => {
-    try {
-      const result = await fetch('https://api.spotify.com/v1/me/top/tracks', {
-        method: 'GET',
-        headers: { 'Authorization' : 'Bearer ' + token}
-      });
+  useEffect(() => {
+    const getTopTracks = async (token) => {
+      try {
+        const result = await fetch('https://api.spotify.com/v1/me/top/tracks/?time_range=short_term', {
+          method: 'GET',
+          headers: { 'Authorization' : 'Bearer ' + token}
+        });
 
-      const data = await result.json();
-      setTopTracks(data.items);
-    } catch (err) {
-      console.log('async failed');
+        const data = await result.json();
+        setTopTracks(data.items);
+      } catch (err) {
+        console.log('async failed');
+      }
     }
-  }
+    if(params.access_token) {
+      getTopTracks(params.access_token);
+      window.ScrollReveal().reveal('.tab-cont', { delay: 300});
+      window.ScrollReveal().reveal('.arrow-cont', { delay: 500});
+    }
+  }, [])
 
   return (
   <div className="App">
     <Container>
       <Row className="p1">
         <Col>
-        <h1>What are you listening to?</h1>
-        <Button href='http://localhost:8888'
-                variant="success">LOG IN WITH SPOTIFY</Button>
+          <h1 className="h1">What are you listening to?</h1>
+          <Button href='http://localhost:8888'
+                  variant="success">Log in <img src={spot} alt="hireme" width="20"/>
+          </Button>
         </Col>
-        <Col></Col>
+        <img className="arrow" src={arrow} alt="top 20"/>
+        <Col>
+          <img className="dance" src={vol} alt="can you turn it up?" width="600px" />
+        </Col>
       </Row>
       <div className="p2">
         <Row>
-          <Button onClick={() => getTopTracks(params.access_token)}
-                  variant="success">GET TOP TRACKS</Button>
-        </Row>
-
-        <Row>
-          <TopTable margin="100px" array={ topTracks }/>
+          <div className="tab-cont load-hidden">
+            <TopTable margin="100px" array={ topTracks }/>
+          </div>
         </Row>
       </div>
     </Container>
